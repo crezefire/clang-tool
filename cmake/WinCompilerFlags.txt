@@ -1,0 +1,20 @@
+# -*- CMake -*-
+#Multi-Process DisableOpenMP ParallelCodeGen EnableIntrinsicFunctions DisableLanguageExtensions
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /openmp-  /Qpar /Oi /Za")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+
+set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+#EnableLinkTimeCodeGen(Required with /GL)
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS} /LTCG")
+
+#WholeProgramOptimization FullOptimization WarningsAsErrors DisableRTTI
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL /Ox /GR-")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /GL /Ox /WX /GR-")
+set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} /GL /Ox /WX /GR-")
+#Edit and continue
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /ZI")
+
+#Disable Exceptions ***UNCOMMENT***
+#string(REPLACE "/EHsc" "" REMOVE_FLAG ${CMAKE_CXX_FLAGS})
+#set(CMAKE_CXX_FLAGS ${REMOVE_FLAG})

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\llvm\tools\clang\include\clang\Parse\CMakeLists.txt" />
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\5f92e49fb9244752c7fd24973ba6c771\AttrParserStringSwitches.inc.tmp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\5f92e49fb9244752c7fd24973ba6c771\AttrParserStringSwitches.inc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\89fb914f0dc5bad2eb391984256c97d5\ClangAttrParserStringSwitches.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\rex-animus\clang\vs15-build\tools\clang\include\clang\Parse\CMakeFiles\ClangAttrParserStringSwitches" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{BCCF218B-09FA-3CFE-8872-3FBE08B4A7DD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

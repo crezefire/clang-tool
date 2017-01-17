@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{CDBFC8E0-352C-3DE3-99B5-68A9F4BE767E}</ProjectGUID>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ClangCommentCommandInfo</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include;D:\rex-animus\clang\vs15-build\tools\clang\include;D:\rex-animus\clang\vs15-build\include;D:\rex-animus\clang\llvm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include;D:\rex-animus\clang\vs15-build\tools\clang\include;D:\rex-animus\clang\vs15-build\include;D:\rex-animus\clang\llvm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include;D:\rex-animus\clang\vs15-build\tools\clang\include;D:\rex-animus\clang\vs15-build\include;D:\rex-animus\clang\llvm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST;D:\rex-animus\clang\llvm\tools\clang\include;D:\rex-animus\clang\vs15-build\tools\clang\include;D:\rex-animus\clang\vs15-build\include;D:\rex-animus\clang\llvm\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/rex-animus/clang/llvm -BD:/rex-animus/clang/vs15-build --check-stamp-file D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/rex-animus/clang/llvm -BD:/rex-animus/clang/vs15-build --check-stamp-file D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/rex-animus/clang/llvm -BD:/rex-animus/clang/vs15-build --check-stamp-file D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -HD:/rex-animus/clang/llvm -BD:/rex-animus/clang/vs15-build --check-stamp-file D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\417ce818e2ae69b3416fb2d70aa3debe\CommentCommandInfo.inc.tmp.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+..\..\..\..\..\Debug\bin\clang-tblgen.exe -gen-clang-comment-command-info -I D:/rex-animus/clang/llvm/tools/clang/include/clang/AST -I D:/rex-animus/clang/llvm/include D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CommentCommands.td -o D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.tmp.rule;D:\rex-animus\clang\vs15-build\Debug\bin\clang-tblgen.exe;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLNamedCharacterReferences.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLTags.td;D:\rex-animus\clang\llvm\include\llvm\CodeGen\ValueTypes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Attributes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Intrinsics.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAArch64.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAMDGPU.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsARM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsBPF.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsHexagon.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsMips.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsNVVM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsPowerPC.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsSystemZ.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsWebAssembly.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsX86.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsXCore.td;D:\rex-animus\clang\llvm\include\llvm\Option\OptParser.td;D:\rex-animus\clang\llvm\include\llvm\TableGen\SearchableTable.td;D:\rex-animus\clang\llvm\include\llvm\Target\GenericOpcodes.td;D:\rex-animus\clang\llvm\include\llvm\Target\Target.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetCallingConv.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetGlobalISel.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetItinerary.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSchedule.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSelectionDAG.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+..\..\..\..\..\Release\bin\clang-tblgen.exe -gen-clang-comment-command-info -I D:/rex-animus/clang/llvm/tools/clang/include/clang/AST -I D:/rex-animus/clang/llvm/include D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CommentCommands.td -o D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.tmp.rule;D:\rex-animus\clang\vs15-build\Release\bin\clang-tblgen.exe;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLNamedCharacterReferences.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLTags.td;D:\rex-animus\clang\llvm\include\llvm\CodeGen\ValueTypes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Attributes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Intrinsics.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAArch64.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAMDGPU.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsARM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsBPF.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsHexagon.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsMips.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsNVVM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsPowerPC.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsSystemZ.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsWebAssembly.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsX86.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsXCore.td;D:\rex-animus\clang\llvm\include\llvm\Option\OptParser.td;D:\rex-animus\clang\llvm\include\llvm\TableGen\SearchableTable.td;D:\rex-animus\clang\llvm\include\llvm\Target\GenericOpcodes.td;D:\rex-animus\clang\llvm\include\llvm\Target\Target.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetCallingConv.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetGlobalISel.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetItinerary.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSchedule.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSelectionDAG.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+..\..\..\..\..\MinSizeRel\bin\clang-tblgen.exe -gen-clang-comment-command-info -I D:/rex-animus/clang/llvm/tools/clang/include/clang/AST -I D:/rex-animus/clang/llvm/include D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CommentCommands.td -o D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.tmp.rule;D:\rex-animus\clang\vs15-build\MinSizeRel\bin\clang-tblgen.exe;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLNamedCharacterReferences.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLTags.td;D:\rex-animus\clang\llvm\include\llvm\CodeGen\ValueTypes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Attributes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Intrinsics.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAArch64.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAMDGPU.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsARM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsBPF.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsHexagon.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsMips.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsNVVM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsPowerPC.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsSystemZ.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsWebAssembly.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsX86.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsXCore.td;D:\rex-animus\clang\llvm\include\llvm\Option\OptParser.td;D:\rex-animus\clang\llvm\include\llvm\TableGen\SearchableTable.td;D:\rex-animus\clang\llvm\include\llvm\Target\GenericOpcodes.td;D:\rex-animus\clang\llvm\include\llvm\Target\Target.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetCallingConv.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetGlobalISel.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetItinerary.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSchedule.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSelectionDAG.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+..\..\..\..\..\RelWithDebInfo\bin\clang-tblgen.exe -gen-clang-comment-command-info -I D:/rex-animus/clang/llvm/tools/clang/include/clang/AST -I D:/rex-animus/clang/llvm/include D:/rex-animus/clang/llvm/tools/clang/include/clang/AST/CommentCommands.td -o D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.tmp.rule;D:\rex-animus\clang\vs15-build\RelWithDebInfo\bin\clang-tblgen.exe;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLNamedCharacterReferences.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentHTMLTags.td;D:\rex-animus\clang\llvm\include\llvm\CodeGen\ValueTypes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Attributes.td;D:\rex-animus\clang\llvm\include\llvm\IR\Intrinsics.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAArch64.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsAMDGPU.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsARM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsBPF.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsHexagon.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsMips.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsNVVM.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsPowerPC.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsSystemZ.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsWebAssembly.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsX86.td;D:\rex-animus\clang\llvm\include\llvm\IR\IntrinsicsXCore.td;D:\rex-animus\clang\llvm\include\llvm\Option\OptParser.td;D:\rex-animus\clang\llvm\include\llvm\TableGen\SearchableTable.td;D:\rex-animus\clang\llvm\include\llvm\Target\GenericOpcodes.td;D:\rex-animus\clang\llvm\include\llvm\Target\Target.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetCallingConv.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetGlobalISel.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetItinerary.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSchedule.td;D:\rex-animus\clang\llvm\include\llvm\Target\TargetSelectionDAG.td;D:\rex-animus\clang\llvm\tools\clang\include\clang\AST\CommentCommands.td;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\417ce818e2ae69b3416fb2d70aa3debe\CommentCommandInfo.inc.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Updating CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Updating CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Updating CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Updating CommentCommandInfo.inc...</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc.tmp D:/rex-animus/clang/vs15-build/tools/clang/include/clang/AST/CommentCommandInfo.inc
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/417ce818e2ae69b3416fb2d70aa3debe/CommentCommandInfo.inc.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\d039cd516cb216c30689aa0f8d355ab4\ClangCommentCommandInfo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/d039cd516cb216c30689aa0f8d355ab4/ClangCommentCommandInfo.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\ClangCommentCommandInfo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/d039cd516cb216c30689aa0f8d355ab4/ClangCommentCommandInfo.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\ClangCommentCommandInfo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/d039cd516cb216c30689aa0f8d355ab4/ClangCommentCommandInfo.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\ClangCommentCommandInfo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:/rex-animus/clang/vs15-build/CMakeFiles/d039cd516cb216c30689aa0f8d355ab4/ClangCommentCommandInfo.rule;D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CommentCommandInfo.inc;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\ClangCommentCommandInfo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\rex-animus\clang\vs15-build\tools\clang\include\clang\AST\CMakeFiles\ClangCommentCommandInfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:/rex-animus/clang/vs15-build/ZERO_CHECK.vcxproj">
+      <Project>CF57ED74-7689-320E-AAA1-1994EFE88325</Project>
+    </ProjectReference>
+    <ProjectReference Include="D:/rex-animus/clang/vs15-build/tools/clang/utils/TableGen/clang-tblgen.vcxproj">
+      <Project>40C744E3-48C3-3AA8-9F03-B05C54E81E5C</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

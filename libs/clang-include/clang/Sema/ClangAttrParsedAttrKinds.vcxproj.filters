@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\rex-animus\clang\llvm\tools\clang\include\clang\Sema\CMakeLists.txt" />
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\ebfcd8e5d54931bacc8d5a3a5d99cee9\AttrParsedAttrKinds.inc.tmp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\ebfcd8e5d54931bacc8d5a3a5d99cee9\AttrParsedAttrKinds.inc.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\rex-animus\clang\vs15-build\CMakeFiles\33244e441e573d3d8c67e8065a17d329\ClangAttrParsedAttrKinds.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\rex-animus\clang\vs15-build\tools\clang\include\clang\Sema\CMakeFiles\ClangAttrParsedAttrKinds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{BCCF218B-09FA-3CFE-8872-3FBE08B4A7DD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

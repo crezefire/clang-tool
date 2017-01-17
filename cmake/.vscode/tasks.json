@@ -1,0 +1,28 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "make",
+    "isShellCommand": true,
+    "isBuildCommand":true,
+    "args": [],
+    "showOutput": "always",
+    "suppressTaskName": true,
+    "options": {
+        "cwd": "${workspaceRoot}/BUILDFOLDERHERE/"
+    },
+    "tasks": [
+        {
+            "taskName": "build",
+            "args": [
+                "all"
+            ]
+        },
+        {
+            "taskName": "clean",
+            "args": [
+                "clean"
+            ]
+        }
+    ]
+}

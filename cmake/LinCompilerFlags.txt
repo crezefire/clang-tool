@@ -1,0 +1,21 @@
+# -*- CMake -*-
+if(DEFINED USE_CLANG AND USE_CLANG EQUAL 1)
+    set(CMAKE_CXX_COMPILER clang++)
+    set(CMAKE_C_COMPILER clang)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
+    message("Using default Clang paths and Clang STL ${USE_CLANG}") #gets rid of warning
+endif()
+
+#Cpp14 MultiProcessCompile NoRTTI 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -fno-exceptions -Wall -pedantic -march=native")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+
+#LinkTimeOutputByteCode MoarCodeInObjectFiles(ld >= 2.21)
+set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} -flto -fuse-linker-plugin")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS} -flto -fuse-linker-plugin -Werror")
+
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -fno-rtti ")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O3 -fno-omit-frame-pointer -fno-rtti -fno-exceptions")
+set(CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL} -O3 -fno-omit-frame-pointer -fno-rtti")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")

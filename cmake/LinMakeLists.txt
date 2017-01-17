@@ -1,0 +1,36 @@
+# -*- CMake -*-
+project (ProjectName)
+
+set(executable_name ExecutableName)
+execute_process(COMMAND sed -i -e "s/EXECUTABLENAMEHERE/${executable_name}/g" "../.vscode/launch.json")
+
+include(libs/CMakeLists.txt)
+include(src/CMakeLists.txt)
+
+#pre-processor definitions here, use -D__PRE_PROCESSOR__
+#add_definitions()
+
+include(cmake/LinCompilerFlags.txt)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ../bin/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE  ../bin/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL  ../bin/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO  ../bin/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG  ../bin/)
+set(CMAKE_BINARY_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+add_executable(${executable_name} ${source_files})
+
+message("IncludeDirs: ${additional_includes}")
+#C++ Additional Include Directories DIRECTORIES
+include_directories(${additional_includes})
+
+message("LinkDirs: ${linker_includes}")
+#Linker Additional Library Directories DIRECTORIES
+link_directories(${linker_includes})
+
+message("TargetLibs: ${additional_libs}")
+#Linker Additional Dependencies EXECUTABLE LIBNAME
+target_link_libraries(${executable_name} ${additional_libs})
+
+set_property(TARGET ${executable_name} PROPERTY FOLDER ${folder_executable})
