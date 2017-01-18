@@ -3,6 +3,7 @@
 
 build/
 .vscode/
+bin/
 
 !*.cpp
 !*.h
@@ -36,5 +37,11 @@ build/
 
 *~
 !cmake/.vscode/
-build/
-build/
+
+#For Clang
+!*.lib
+!*.pdb
+!*.inc
+
+#Compressed Clang libs
+!*.7z

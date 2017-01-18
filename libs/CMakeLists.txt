@@ -19,46 +19,28 @@ set(additional_libs
 	uuid.lib
 	comdlg32.lib
 	advapi32.lib
-	LLVMSupport.lib
+	psapi.lib
+	version.lib
 	clangAST.lib
 	clangASTMatchers.lib
 	clangBasic.lib
-	clangTidy.lib
-	clangTidyBoostModule.lib
-	clangTidyCERTModule.lib
-	clangTidyCppCoreGuidelinesModule.lib
-	clangTidyGoogleModule.lib
-	clangTidyLLVMModule.lib
-	clangTidyMiscModule.lib
-	clangTidyModernizeModule.lib
-	clangTidyMPIModule.lib
-	clangTidyPerformanceModule.lib
-	clangTidyReadabilityModule.lib
 	clangTooling.lib
-	clangTidyUtils.lib
-	clangFormat.lib
-	clangStaticAnalyzerFrontend.lib
+	clangParse.lib
+	clangToolingCore.lib
+	clangLex.lib
 	clangFrontend.lib
 	clangDriver.lib
-	version.lib
+	LLVMCore.lib
+	LLVMMC.lib
+	LLVMSupport.lib
 	LLVMOption.lib
-	clangParse.lib
-	LLVMMCParser.lib
 	clangSerialization.lib
 	clangSema.lib
 	clangEdit.lib
 	LLVMBitReader.lib
-	LLVMProfileData.lib
-	clangStaticAnalyzerCheckers.lib
-	clangStaticAnalyzerCore.lib
 	clangAnalysis.lib
-	clangToolingCore.lib
-	clangRewrite.lib
-	clangLex.lib
-	LLVMCore.lib
-	LLVMMC.lib
-	psapi.lib
-	LLVMDemangle.lib
+	LLVMProfileData.lib
+	LLVMMCParser.lib
 )
 
 set(additional_includes
