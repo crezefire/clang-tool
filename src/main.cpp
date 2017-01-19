@@ -33,7 +33,8 @@ auto ClassDeclMatcher = cxxRecordDecl(isDefinition()).bind(classBindName);
 constexpr auto methodBindName = "method";
 auto MemberFunctionMatcher = cxxMethodDecl().bind(methodBindName);
 
-constexpr auto endl = "\n";
+constexpr auto endl = '\n';
+constexpr auto tab = '\t';
 
 const auto RemovePath = [](const std::string& str) {
     auto name = str.find_last_of('\\');
@@ -373,7 +374,7 @@ namespace Eegeo {
 
 class MatchProcessor : public MatchFinder::MatchCallback {
     raw_ostream& OS{ llvm::errs() };
-    raw_ostream& Dump{ llvm::errs() };
+    raw_ostream& Dump{ llvm::outs() };
     SmallVector<SmallVector<SmallString<20>, 10>, 10> MemberFunctions;
     StringRef SourceFile;
 
@@ -437,20 +438,142 @@ public:
     }
 
     void Print() {
-        Dump << ClassName << endl << endl;
+        auto NumTabs = 0;
 
-        for (auto& i : Methods) {
-            Dump << i.ReturnType.Keyword << " ";
+        const auto Tabify = [&]() {
+            for (auto i = 0; i < NumTabs; ++i) {
+                Dump << tab;
+            }
+        };
 
-            Dump << i.Name << "(";
+        const auto OldLine = [&]() {
+            Dump << endl;
+            --NumTabs;
+            Tabify();
+        };
 
-            for (auto& j : i.Params) {
-                Dump << j.Keyword << " " << j.Name << ", ";
+        const auto NewLine = [&]() {
+            Dump << endl;
+            ++NumTabs;
+            Tabify();
+        };
+
+        const auto NextLine = [&]() {
+            Dump << endl;
+            Tabify();
+        };
+
+        const auto PrintField = [&](const auto& field) {
+            Dump << "\"" << field << "\" : ";
+        };
+
+        const auto PrintString = [&](const auto& str) {
+            Dump << "\"" << str << "\"";
+        };
+
+        const auto PrintType = [&](const Eegeo::Type& type) {
+            Dump << "{ ";
+
+            if (!type.Name.empty()) {
+                PrintField("name");
+                PrintString(type.Name);
+                Dump << ", ";
             }
 
-            Dump << ")" << endl;
+            PrintField("keyword");
+            PrintString(type.Keyword);
+            Dump << ", ";
+
+            PrintField("type");
+            PrintString(type.TypeName);
+
+            Dump << "}";
+        };
+        
+        Dump << "{";
+        NewLine();
+
+        {
+            // Dump << "\"modules\" : [";
+            PrintField("modules");
+            Dump << "[";
+            NewLine();
+            {
+                Dump << "{";
+                NewLine();
+
+                {
+                    //Dump << "\"name\" : \"" << ClassName << "\",";
+                    PrintField("name");
+                    PrintString(ClassName);
+                    Dump << ",";
+                    NextLine();
+
+                    //Dump << "\"methods\" : [";
+                    PrintField("methods");
+                    Dump << "[";
+                    NewLine();
+                    {
+                        for (auto m = 0; m < Methods.size(); ++m) {
+                        //for (auto& i : Methods) {
+                            auto& i = Methods[m];
+                            Dump << "{";
+                            NewLine();
+
+                            PrintField("name");
+                            PrintString(i.Name);
+                            Dump << ",";
+                            NextLine();
+
+                            PrintField("return-type");
+                            PrintType(i.ReturnType);
+                            
+                            Dump << ",";
+                            NextLine();
+                            
+                            PrintField("params");
+                            Dump << "[";
+                            NewLine();
+                            
+                            {
+                                for (auto p = 0; p < i.Params.size(); ++p) {
+                                    PrintType(i.Params[p]);
+                                    
+                                    if (p != i.Params.size() - 1) {
+                                        Dump << ",";
+                                        NextLine();
+                                    }
+                                }
+                            }
+                            
+                            OldLine();
+                            Dump << "]";
+
+                            OldLine();
+                            Dump << "}";
+
+                            if (m != Methods.size() - 1) {
+                                Dump << ",";
+                            }
+
+                            NextLine();
+                        }
+                    }
+
+                    OldLine();
+                    Dump << "]";
+                }
+
+                OldLine();
+                Dump << "}";
+            }
+
+            OldLine();
+            Dump << "]";
         }
 
+        OldLine();
+        Dump << "}";
     }
 };
 
@@ -469,7 +592,7 @@ int main(int argc, const char **argv) {
 
     Printer.Print();
 
-    system("pause");
+    //system("pause");
 
     return ret;
 }
