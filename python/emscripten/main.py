@@ -75,17 +75,18 @@ def get_llvm_ir_type(param):
     keyword = param["keyword"]
 
     if "float" in keyword:
-        return ["float", "4"]
+        return ["\"float\"", "4"]
     elif "double" in keyword:
-        return ["double", "8"]
+        return ["\"double\"", "8"]
     elif "int" in keyword:
-        return ["int" , "4"]
+        return ["\"i32\"" , "4"]
     else:
         return ["", ""] #TODO(vim): Handle this
 
 def get_marshal_params(params):
     marshal_decs = ""
     marshal_params = ""
+    post_call_list = ""
 
     for param in params:
         type = param["type"]
@@ -96,15 +97,18 @@ def get_marshal_params(params):
             marshal_decs += " marshalPointers.push(" + name + "Marshal);\n"
             marshal_params += ", " + name + "Marshal"
         elif type == "Array" or type == "Pointer":
-            if "out_" in name:
-                do_something = ""
             ir_type, size = get_llvm_ir_type(param)
+
             marshal_decs += "\t\tvar " + name + "Marshal = emscriptenMemory.marshalArrayOfType(" + name + ", " + ir_type + ", " + size + ");\n"
             marshal_params += ", " + name + "Marshal"
+
+            if "out_" in name:
+                marshal_decs += "\t\tvar " + name + "Count = " + name + ".length;\n"
+                post_call_list += "\t\tvar ret" + name + " = emscriptenMemory.readMarshalArrayOfType(" + name + "Marshal, " + ir_type + ", " + size + ", " + name + "Count);\n"
         else:
             marshal_params += ", " + name
 
-    return [marshal_decs, marshal_params]
+    return [marshal_decs, marshal_params, post_call_list]
 
 def main(args):
     file = open(args["file"], "r")
@@ -152,7 +156,7 @@ def main(args):
             param_list = get_param_list(method_params)
             return_type = get_return_params(method_return)
             interop_params_list = get_interop_params(method_params)
-            marshal_decls, marshal_params_list = get_marshal_params(method_params)
+            marshal_decls, marshal_params_list, post_call_statements = get_marshal_params(method_params)
 
             prepend = "\"number\""
 
@@ -169,6 +173,8 @@ def main(args):
                 out_file.write(marshal_decls + "\n")
 
             out_file.write("\t\tvar retValue = _" + method_name + interop + "(_apiPointer" + marshal_params_list + ");\n\n")
+
+            out_file.write(post_call_statements + "\n")
 
             if len(marshal_decls) > 0:
                 out_file.write("\t\temscriptenMemory.freeMemory(marshalPointers);\n")
