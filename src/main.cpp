@@ -379,6 +379,7 @@ class MatchProcessor : public MatchFinder::MatchCallback {
     StringRef SourceFile;
 
     SmallString<20> ClassName;
+    SmallString<30> QualifiedClassName;
     SmallVector<Eegeo::Method, 10> Methods;
 public:
     MatchProcessor(StringRef ref)
@@ -398,6 +399,8 @@ public:
             if (SourceFile != getFileName(classTree))
                 return;
 
+            QualifiedClassName = classTree->getQualifiedNameAsString();
+            QualifiedClassName = QualifiedClassName.substr(0, QualifiedClassName.find_last_of("::") + 1);
             ClassName = classTree->getNameAsString();
         }
 
@@ -494,7 +497,6 @@ public:
         NewLine();
 
         {
-            // Dump << "\"modules\" : [";
             PrintField("modules");
             Dump << "[";
             NewLine();
@@ -503,19 +505,27 @@ public:
                 NewLine();
 
                 {
-                    //Dump << "\"name\" : \"" << ClassName << "\",";
                     PrintField("name");
                     PrintString(ClassName);
                     Dump << ",";
                     NextLine();
 
-                    //Dump << "\"methods\" : [";
+                    PrintField("file-name");
+                    PrintString(SourceFile);
+                    Dump << ",";
+                    NextLine();
+
+                    PrintField("namespace");
+                    PrintString(QualifiedClassName);
+                    Dump << ",";
+                    NextLine();
+
                     PrintField("methods");
                     Dump << "[";
                     NewLine();
+
                     {
                         for (auto m = 0; m < Methods.size(); ++m) {
-                        //for (auto& i : Methods) {
                             auto& i = Methods[m];
                             Dump << "{";
                             NewLine();

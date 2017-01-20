@@ -29,7 +29,7 @@ namespace Eegeo {
 
             void SetEventCallback(callback cback);
 
-            float GetDistanceToInterest(double altitude, void(*)(int, float));
+            float GetDistanceToInterest(double altitude, void(*onEvent)(int, float));
 
             float* GetPitchDegrees(t1 something);
 
