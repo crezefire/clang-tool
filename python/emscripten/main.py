@@ -96,6 +96,8 @@ def get_marshal_params(params):
             marshal_decs += " marshalPointers.push(" + name + "Marshal);\n"
             marshal_params += ", " + name + "Marshal"
         elif type == "Array" or type == "Pointer":
+            if "out_" in name:
+                do_something = ""
             ir_type, size = get_llvm_ir_type(param)
             marshal_decs += "\t\tvar " + name + "Marshal = emscriptenMemory.marshalArrayOfType(" + name + ", " + ir_type + ", " + size + ");\n"
             marshal_params += ", " + name + "Marshal"

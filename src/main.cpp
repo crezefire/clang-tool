@@ -400,7 +400,11 @@ public:
                 return;
 
             QualifiedClassName = classTree->getQualifiedNameAsString();
-            QualifiedClassName = QualifiedClassName.substr(0, QualifiedClassName.find_last_of("::") + 1);
+            
+            auto pos = QualifiedClassName.find_last_of("::");
+            if (pos != std::string::npos)
+                QualifiedClassName = QualifiedClassName.substr(0, pos + 1);
+
             ClassName = classTree->getNameAsString();
         }
 
@@ -428,7 +432,6 @@ public:
             for (auto i = 0; i < numParams; ++i) {
                 auto paramType = Eegeo::ProcessParamType(methodTree->getParamDecl(i)->getType(), methodTree->getASTContext());
                 paramType.Name = methodTree->getParamDecl(i)->getDeclName().getAsString();
-                //OS << "\t" << paramType.Keyword << " [" << paramType.TypeName << "] " << methodTree->getParamDecl(i)->getDeclName() << endl;// paramType.Name << endl;
 
                 params.emplace_back(std::move(paramType));
             }

@@ -16,7 +16,7 @@ namespace Eegeo {
 
             callback OnUpdate(float deltaSeconds);
 
-            const bool SetView(float* configs, const std::string& name);
+            const bool SetView(float* out_configs, const std::string& name);
 
             void SetViewToBounds(double* northEast,
                 float southWest[3],
