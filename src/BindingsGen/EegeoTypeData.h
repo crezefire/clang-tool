@@ -16,35 +16,35 @@ constexpr auto endl = '\n';
 constexpr auto tab = '\t';
 
 namespace Eegeo {
-    struct Type {
-        enum types {
-            Void,
-            Floating,
-            Integral,
-            Boolean,
-            Pointer,
-            FunctionPointer,
-            Array,
-            Struct,
-            String
-        };
-
+    enum class RSType {
+        Void,
+        Floating,
+        Integral,
+        Boolean,
+        Pointer,
+        FunctionPointer,
+        Array,
+        Struct,
+        String
+    };
+    
+    struct RestrictedSimplifiedType {
         std::string Keyword;
         StringRef TypeName;
         std::string Name;
 
-        static StringRef GetTypeName(types param);
+        static StringRef GetTypeName(RSType param);
     };
 
-    struct Method {
+    struct InterfaceMethod {
         std::string Name;
-        Type ReturnType;
-        std::vector<Type> Params;
+        RestrictedSimplifiedType ReturnType;
+        std::vector<RestrictedSimplifiedType> Params;
     };
 
-    std::tuple<bool, std::string, Eegeo::Type::types> CheckBuiltinType(clang::QualType CanonicalType, clang::ASTContext& Context);
+    std::tuple<bool, std::string, RSType> CheckBuiltinType(clang::QualType CanonicalType, clang::ASTContext& Context);
 
-    Type ProcessReturnType(clang::QualType type, clang::ASTContext& context);
+    RestrictedSimplifiedType ProcessReturnType(clang::QualType type, clang::ASTContext& context);
 
-    Type ProcessParamType(clang::QualType type, clang::ASTContext& context);
+    RestrictedSimplifiedType ProcessParamType(clang::QualType type, clang::ASTContext& context);
 }

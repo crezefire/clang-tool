@@ -14,33 +14,33 @@ using namespace clang::ast_matchers;
 using namespace llvm;
 
 namespace Eegeo {
-    StringRef Type::GetTypeName(types param) {
+    StringRef RestrictedSimplifiedType::GetTypeName(RSType param) {
         switch (param) {
-        case Void:
+        case RSType::Void:
             return "Void";
 
-        case Floating:
+        case RSType::Floating:
             return "Floating";
 
-        case Integral:
+        case RSType::Integral:
             return "Integral";
 
-        case Boolean:
+        case RSType::Boolean:
             return "Boolean";
 
-        case Pointer:
+        case RSType::Pointer:
             return "Pointer";
 
-        case FunctionPointer:
+        case RSType::FunctionPointer:
             return "FunctionPointer";
 
-        case Array:
+        case RSType::Array:
             return "Array";
 
-        case Struct:
+        case RSType::Struct:
             return "Struct";
 
-        case String:
+        case RSType::String:
             return "String";
 
         default:
@@ -49,9 +49,9 @@ namespace Eegeo {
         }
     }
 
-    std::tuple<bool, std::string, Eegeo::Type::types> CheckBuiltinType(QualType CanonicalType, ASTContext& Context) {
+    std::tuple<bool, std::string, RSType> CheckBuiltinType(QualType CanonicalType, ASTContext& Context) {
         std::string keyword;
-        Eegeo::Type::types returnTypeName = Eegeo::Type::Void;
+        RSType returnTypeName = RSType::Void;
 
         bool typeFound = false;
 
@@ -67,22 +67,22 @@ namespace Eegeo {
 
         if (keyword == "_Bool") {
             keyword = "bool";
-            returnTypeName = Eegeo::Type::Boolean;
+            returnTypeName = RSType::Boolean;
         }
         else if (CanonicalType->isVoidType()) {
-            returnTypeName = Eegeo::Type::Void;
+            returnTypeName = RSType::Void;
         }
         else if (CanonicalType->isIntegralType(Context)) {
-            returnTypeName = Eegeo::Type::Integral;
+            returnTypeName = RSType::Integral;
         }
         else if (CanonicalType->isFloatingType()) {
             auto kind = BT->getKind();
 
             //For future use case
             if (kind == BuiltinType::Kind::Double || kind == BuiltinType::Kind::LongDouble)
-                returnTypeName = Eegeo::Type::Floating;
+                returnTypeName = RSType::Floating;
             else
-                returnTypeName = Eegeo::Type::Floating;
+                returnTypeName = RSType::Floating;
         }
         else {
             //TODO(vim): Error
@@ -93,7 +93,7 @@ namespace Eegeo {
         return { typeFound, keyword, returnTypeName };
     }
 
-    Type ProcessReturnType(QualType type, ASTContext& context) {
+    RestrictedSimplifiedType ProcessReturnType(QualType type, ASTContext& context) {
         auto& OS = llvm::errs();
 
         auto canonType = type.getDesugaredType(context).getCanonicalType();
@@ -103,7 +103,7 @@ namespace Eegeo {
 
         std::string keyword;
 
-        Eegeo::Type::types returnTypeName = Eegeo::Type::Void;
+        RSType returnTypeName = RSType::Void;
 
         if (unqual->isBuiltinType()) {
 
@@ -113,22 +113,22 @@ namespace Eegeo {
 
             if (keyword == "_Bool") {
                 keyword = "bool";
-                returnTypeName = Eegeo::Type::Boolean;
+                returnTypeName = RSType::Boolean;
             }
             else if (unqual->isVoidType()) {
-                returnTypeName = Eegeo::Type::Void;
+                returnTypeName = RSType::Void;
             }
             else if (unqual->isIntegralType(context)) {
-                returnTypeName = Eegeo::Type::Integral;
+                returnTypeName = RSType::Integral;
             }
             else if (unqual->isFloatingType()) {
                 auto kind = BT->getKind();
 
                 //For future use case
                 if (kind == BuiltinType::Kind::Double || kind == BuiltinType::Kind::LongDouble)
-                    returnTypeName = Eegeo::Type::Floating;
+                    returnTypeName = RSType::Floating;
                 else
-                    returnTypeName = Eegeo::Type::Floating;
+                    returnTypeName = RSType::Floating;
             }
             else {
                 //TODO(vim): Error
@@ -141,7 +141,7 @@ namespace Eegeo {
         else if (unqual->isPointerType()) {
             auto PT = dyn_cast<PointerType>(canonType);
 
-            returnTypeName = Eegeo::Type::Pointer;
+            returnTypeName = RSType::Pointer;
 
             auto pointee = PT->getPointeeType();
 
@@ -166,7 +166,7 @@ namespace Eegeo {
         else if (unqual->isRecordType()) {
             auto RT = unqual->getAsCXXRecordDecl();
 
-            returnTypeName = Eegeo::Type::Struct;
+            returnTypeName = RSType::Struct;
 
             if (RT->isPOD())
                 keyword = RT->getName();
@@ -180,10 +180,10 @@ namespace Eegeo {
             OS << "Unsupported Param Type Found!!" << endl;
         }
 
-        return { std::move(keyword), Eegeo::Type::GetTypeName(returnTypeName), "" };
+        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::GetTypeName(returnTypeName), "" };
     }
 
-    Type ProcessParamType(QualType type, ASTContext& context) {
+    RestrictedSimplifiedType ProcessParamType(QualType type, ASTContext& context) {
         auto& OS = llvm::errs();
 
         auto canonType = type.getDesugaredType(context).getCanonicalType();
@@ -194,7 +194,7 @@ namespace Eegeo {
         std::string keyword;
         std::string name;
 
-        Eegeo::Type::types returnTypeName = Eegeo::Type::Void;
+        RSType returnTypeName = RSType::Void;
 
         if (unqual->isBuiltinType()) {
 
@@ -204,23 +204,23 @@ namespace Eegeo {
 
             if (keyword == "_Bool") {
                 keyword = "bool";
-                returnTypeName = Eegeo::Type::Boolean;
+                returnTypeName = RSType::Boolean;
             }
             else if (unqual->isVoidType()) {
-                returnTypeName = Eegeo::Type::Void;
+                returnTypeName = RSType::Void;
                 //TODO(vim): Error
             }
             else if (unqual->isIntegralType(context)) {
-                returnTypeName = Eegeo::Type::Integral;
+                returnTypeName = RSType::Integral;
             }
             else if (unqual->isFloatingType()) {
                 auto kind = BT->getKind();
 
                 //For future use case
                 if (kind == BuiltinType::Kind::Double || kind == BuiltinType::Kind::LongDouble)
-                    returnTypeName = Eegeo::Type::Floating;
+                    returnTypeName = RSType::Floating;
                 else
-                    returnTypeName = Eegeo::Type::Floating;
+                    returnTypeName = RSType::Floating;
             }
             else {
                 //TODO(vim): Error
@@ -228,7 +228,7 @@ namespace Eegeo {
             }
         }
         else if (unqual->isFunctionPointerType()) {
-            returnTypeName = Eegeo::Type::FunctionPointer;
+            returnTypeName = RSType::FunctionPointer;
             keyword = canonType.getAsString();
         }
         else if (unqual->isPointerType()) {
@@ -239,7 +239,7 @@ namespace Eegeo {
                 if (const auto AT = dyn_cast<ArrayType>(original.getTypePtr())) {
                     if (AT->getSizeModifier() == ArrayType::ArraySizeModifier::Normal) {
                         const auto CAT = dyn_cast<ConstantArrayType>(AT);
-                        returnTypeName = Eegeo::Type::Array;
+                        returnTypeName = RSType::Array;
                         keyword = original.getAsString();
                     }
                     else {
@@ -253,7 +253,7 @@ namespace Eegeo {
 
                 auto PT = dyn_cast<PointerType>(canonType);
 
-                returnTypeName = Eegeo::Type::Pointer;
+                returnTypeName = RSType::Pointer;
 
                 auto pointee = PT->getPointeeType();
 
@@ -279,7 +279,7 @@ namespace Eegeo {
         else if (unqual->isRecordType()) {
             auto RT = unqual->getAsCXXRecordDecl();
 
-            returnTypeName = Eegeo::Type::Struct;
+            returnTypeName = RSType::Struct;
 
             if (RT->isPOD())
                 keyword = RT->getName();
@@ -294,7 +294,7 @@ namespace Eegeo {
 
             if (pointee->isRecordType() && pointee->getAsCXXRecordDecl()->getDeclName().getAsString() == "basic_string") {
                 keyword = "char";
-                returnTypeName = Eegeo::Type::String;
+                returnTypeName = RSType::String;
             }
             else {
                 OS << "Unsupported reference type. Use a pointer instead!" << endl;
@@ -307,6 +307,6 @@ namespace Eegeo {
             type.dump();
         }
 
-        return { std::move(keyword), Eegeo::Type::GetTypeName(returnTypeName), std::move(name) };
+        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::GetTypeName(returnTypeName), std::move(name) };
     }
 }

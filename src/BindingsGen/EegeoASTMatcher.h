@@ -41,7 +41,7 @@ namespace Eegeo {
 
         llvm::SmallString<20> ClassName;
         llvm::SmallString<30> QualifiedClassName;
-        llvm::SmallVector<Eegeo::Method, 10> Methods;
+        llvm::SmallVector<Eegeo::InterfaceMethod, 10> Methods;
     public:
         MatchProcessor(StringRef ref)
             : SourceFile(std::move(ref)) {}

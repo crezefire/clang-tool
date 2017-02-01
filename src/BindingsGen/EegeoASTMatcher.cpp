@@ -58,7 +58,7 @@ namespace Eegeo {
 
             //***********************
 
-            std::vector<Eegeo::Type> params;
+            std::vector<Eegeo::RestrictedSimplifiedType> params;
 
             auto numParams = methodTree->getNumParams();
 
@@ -69,7 +69,7 @@ namespace Eegeo {
                 params.emplace_back(std::move(paramType));
             }
 
-            Methods.emplace_back(Eegeo::Method{ std::move(methodTree->getDeclName().getAsString()) , std::move(retType), std::move(params) });
+            Methods.emplace_back(Eegeo::InterfaceMethod{ std::move(methodTree->getDeclName().getAsString()) , std::move(retType), std::move(params) });
 
             //OS << endl << endl;
         }
@@ -109,7 +109,7 @@ namespace Eegeo {
                 Dump << "\"" << str << "\"";
             };
 
-            const auto PrintType = [&](const Eegeo::Type& type) {
+            const auto PrintType = [&](const Eegeo::RestrictedSimplifiedType& type) {
                 Dump << "{ ";
 
                 if (!type.Name.empty()) {
