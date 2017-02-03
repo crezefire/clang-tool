@@ -1,15 +1,3 @@
-// Declares clang::SyntaxOnlyAction.
-#include "clang/Frontend/FrontendActions.h"
-#include "clang/Tooling/CommonOptionsParser.h"
-#include "clang/Tooling/Tooling.h"
-
-// Declares llvm::cl::extrahelp.
-#include "llvm/Support/CommandLine.h"
-
-//For AST matching
-#include "clang/ASTMatchers/ASTMatchers.h"
-#include "clang/ASTMatchers/ASTMatchFinder.h"
-
 #include "BindingsGen/EegeoASTMatcher.h"
 
 using namespace clang;
@@ -37,7 +25,7 @@ int main(int argc, const char **argv) {
     ClangTool Tool(OptionsParser.getCompilations(),
         OptionsParser.getSourcePathList());
 
-    Eegeo::MatchProcessor Printer(Eegeo::RemovePath(OptionsParser.getSourcePathList()[0]));
+    Eegeo::EegeoASTMatcher Printer(Eegeo::removePath(OptionsParser.getSourcePathList()[0]));
     MatchFinder Finder;
 
     Finder.addMatcher(ClassDeclMatcher, &Printer);
@@ -45,7 +33,7 @@ int main(int argc, const char **argv) {
 
     auto ret = Tool.run(newFrontendActionFactory(&Finder).get());
 
-    Printer.Print();
+    Printer.DumpJSON();
 
     //system("pause");
 

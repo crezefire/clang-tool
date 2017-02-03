@@ -170,7 +170,7 @@ namespace Eegeo {
         auto Ret = getSimplifiedType(CurrentType.getDesugaredType(Context), SourceLoc, Context);
         
         if (Ret.hasValue()) {
-            auto  ResolvedType = Ret.getValue();
+            auto& ResolvedType = Ret.getValue();
             ResolvedType.second = CurrentType.getAsString();
 
             return ResolvedType;
@@ -257,7 +257,7 @@ namespace Eegeo {
 
          if (!Result.hasValue()) { return NoneType::None; }
 
-         auto SimpleType = Result.getValue();
+         auto& SimpleType = Result.getValue();
 
          if (SimpleType.first == RSTKind::Array || SimpleType.first == RSTKind::Pointer || SimpleType.first == RSTKind::String) {
              ReportNote(Context, SourceLoc, "This is a pointer type, which has several memory ownership implications");
@@ -276,7 +276,7 @@ namespace Eegeo {
 
         if (!Result.hasValue()) { return NoneType::None; }
 
-        auto SimpleType = Result.getValue();
+        auto& SimpleType = Result.getValue();
 
         return RestrictedSimplifiedType{ SimpleType.second, Type.getQualifiers().getAsString(), RestrictedSimplifiedType::getTypeName(SimpleType.first), std::move(Name) };
     }
