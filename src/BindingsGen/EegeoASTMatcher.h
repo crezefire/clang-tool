@@ -1,13 +1,5 @@
 #pragma once
 
-// Declares clang::SyntaxOnlyAction.
-#include "clang/Frontend/FrontendActions.h"
-#include "clang/Tooling/CommonOptionsParser.h"
-#include "clang/Tooling/Tooling.h"
-
-// Declares llvm::cl::extrahelp.
-#include "llvm/Support/CommandLine.h"
-
 //For AST matching
 #include "clang/ASTMatchers/ASTMatchers.h"
 #include "clang/ASTMatchers/ASTMatchFinder.h"
@@ -46,7 +38,7 @@ namespace Eegeo {
 
         llvm::SmallVector<FileModule, 1> Modules;
 
-        llvm::Optional<int> getModuleIndexFromClassName(StringRef ClassName);
+        llvm::Optional<int> getModuleIndexFromClassName(llvm::StringRef ClassName);
 
     public:
         EegeoASTMatcher(llvm::StringRef Ref);

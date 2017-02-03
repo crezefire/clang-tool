@@ -1,17 +1,5 @@
 #include "EegeoASTMatcher.h"
 
-// Declares clang::SyntaxOnlyAction.
-#include "clang/Frontend/FrontendActions.h"
-#include "clang/Tooling/CommonOptionsParser.h"
-#include "clang/Tooling/Tooling.h"
-
-// Declares llvm::cl::extrahelp.
-#include "llvm/Support/CommandLine.h"
-
-//For AST matching
-#include "clang/ASTMatchers/ASTMatchers.h"
-#include "clang/ASTMatchers/ASTMatchFinder.h"
-
 #include "EegeoTypeData.h"
 
 constexpr auto Tab = "\t";
@@ -109,21 +97,25 @@ namespace Eegeo {
         llvm::outs() << "\"" << str << "\"";
     };
 
-    const auto printType = [&](const Eegeo::RestrictedSimplifiedType& type) {
+    const auto printType = [&](const Eegeo::RestrictedSimplifiedType& Type) {
         llvm::outs() << "{ ";
 
-        if (!type.Name.empty()) {
+        if (!Type.Name.empty()) {
             printField("name");
-            printString(type.Name);
+            printString(Type.Name);
             llvm::outs() << ", ";
         }
 
+        printField("qualifiers");
+        printString(Type.Qualifiers);
+        llvm::outs() << ", ";
+
         printField("keyword");
-        printString(type.Keyword);
+        printString(Type.Keyword);
         llvm::outs() << ", ";
 
         printField("type");
-        printString(type.TypeName);
+        printString(Type.TypeName);
 
         llvm::outs() << "}";
     };
@@ -157,40 +149,6 @@ namespace Eegeo {
         const auto nextField = [&] {
             OStream << ",";
             nextLine();
-        };
-
-        const auto enterScope = [&](auto& OStream, auto Enter, auto Exit) {
-            OStream << Enter;
-            newLine();
-
-            struct Pop {
-                decltype(OStream)& OS;
-                decltype(Exit) ExitScope;
-                decltype(oldLine)& PopLine;
-
-                /*bool Valid = true;
-
-                Pop(const Pop&) = delete;
-                Pop& operator=(const Pop&) = delete;
-
-                Pop(Pop&& RHS)
-                : OS(RHS.OS), ExitScope(RHS.ExitScope), PopLine(RHS.PopLine)
-                {
-                    RHS.Valid = false;
-                }
-
-                Pop& operator=(Pop&& RHS) {
-                    RHS.Valid = false;
-                }*/
-                
-                ~Pop() {
-                    //if (!Valid) return;
-                    PopLine();
-                    OS << ExitScope;
-                }
-            };
-
-            return Pop{ OStream, Exit, oldLine };
         };
 
         const auto pushObject = [&]() {

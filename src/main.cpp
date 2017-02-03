@@ -1,5 +1,13 @@
 #include "BindingsGen/EegeoASTMatcher.h"
 
+// Declares clang::SyntaxOnlyAction.
+#include "clang/Frontend/FrontendActions.h"
+#include "clang/Tooling/CommonOptionsParser.h"
+#include "clang/Tooling/Tooling.h"
+
+// Declares llvm::cl::extrahelp.
+#include "llvm/Support/CommandLine.h"
+
 using namespace clang;
 using namespace clang::tooling;
 using namespace clang::ast_matchers;
