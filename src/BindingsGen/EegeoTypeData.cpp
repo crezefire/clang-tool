@@ -169,12 +169,12 @@ namespace Eegeo {
         
         auto Ret = getSimplifiedType(CurrentType.getDesugaredType(Context), SourceLoc, Context);
         
-        if (Ret.hasValue()) {
+        /*if (Ret.hasValue()) {
             auto& ResolvedType = Ret.getValue();
             ResolvedType.second = CurrentType.getAsString();
 
             return ResolvedType;
-        }
+        }*/
 
         return Ret;
     }
