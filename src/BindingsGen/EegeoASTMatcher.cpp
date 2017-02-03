@@ -178,10 +178,12 @@ namespace Eegeo {
             pushArray();
 
             {
-                pushObject();
-                {
+                for (int ModuleIndex = 0, End = Modules.size(); ModuleIndex < End; ++ModuleIndex) {
+                    auto& CurrentModule = Modules[ModuleIndex];
+                    pushObject();
+                
                     printField("name");
-                    printString(Modules[0].ClassName);
+                    printString(CurrentModule.ClassName);
                     nextField();
 
                     printField("file-name");
@@ -189,14 +191,14 @@ namespace Eegeo {
                     nextField();
 
                     printField("namespace");
-                    printString(Modules[0].Namespace);
+                    printString(CurrentModule.Namespace);
                     nextField();
 
                     printField("methods");
                     pushArray();
                     {
-                        for (auto m = 0; m < Modules[0].Methods.size(); ++m) {
-                            auto& i = Modules[0].Methods[m];
+                        for (auto m = 0; m < CurrentModule.Methods.size(); ++m) {
+                            auto& i = CurrentModule.Methods[m];
 
                             pushObject();
 
@@ -224,7 +226,7 @@ namespace Eegeo {
                             popArray();
                             popObject();
 
-                            if (m != Modules[0].Methods.size() - 1) {
+                            if (m != CurrentModule.Methods.size() - 1) {
                                 OStream << ",";
                             }
 
@@ -233,9 +235,14 @@ namespace Eegeo {
                     }
 
                     popArray();
-                }
+                    popObject();
 
-                popObject();
+                    if (ModuleIndex != End - 1) {
+                        OStream << ",";
+                    }
+
+                    nextLine();
+                }
             }
 
             popArray();
