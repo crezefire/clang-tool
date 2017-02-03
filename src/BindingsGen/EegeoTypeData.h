@@ -16,7 +16,7 @@ constexpr auto endl = '\n';
 constexpr auto tab = '\t';
 
 namespace Eegeo {
-    enum class RSType {
+    enum class RSTKind {
         Void,
         Floating,
         Integral,
@@ -30,11 +30,11 @@ namespace Eegeo {
     
     struct RestrictedSimplifiedType {
         std::string Keyword;
-        //std::string Qualifiers;
+        std::string Qualifiers;
         StringRef TypeName;
         std::string Name;
 
-        static StringRef getTypeName(RSType param);
+        static StringRef getTypeName(RSTKind param);
     };
 
     struct InterfaceMethod {
@@ -43,11 +43,11 @@ namespace Eegeo {
         std::vector<RestrictedSimplifiedType> Params;
     };
 
-    RestrictedSimplifiedType ProcessReturnType(clang::QualType type, clang::ASTContext& context);
+    llvm::Optional<RestrictedSimplifiedType> processReturnType(clang::QualType Type, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
 
-    RestrictedSimplifiedType ProcessParamType(clang::QualType type, clang::ASTContext& context);
+    llvm::Optional<RestrictedSimplifiedType> processParamType(clang::QualType Type, std::string Name, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
 
-    llvm::Optional<std::pair<RSType, std::string>> resolveTypeForBuiltin(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
+    llvm::Optional<std::pair<RSTKind, std::string>> resolveTypeForBuiltin(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
     
-    llvm::Optional<std::pair<RSType, std::string>> getSimplifiedType(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
+    llvm::Optional<std::pair<RSTKind, std::string>> getSimplifiedType(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
 }
