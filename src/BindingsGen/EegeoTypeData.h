@@ -32,6 +32,7 @@ namespace Eegeo {
         std::string Name;
         RestrictedSimplifiedType ReturnType;
         std::vector<RestrictedSimplifiedType> Params;
+        bool IsStatic{ false };
     };
 
     llvm::Optional<RestrictedSimplifiedType> processReturnType(clang::QualType Type, clang::SourceLocation SourceLoc, clang::ASTContext& Context);

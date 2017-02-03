@@ -85,7 +85,9 @@ namespace Eegeo {
                 Params.emplace_back(std::move(paramType));
             }
 
-            CurrentModule.Methods.emplace_back(Eegeo::InterfaceMethod{ std::move(MethodTree->getDeclName().getAsString()) , std::move(RetType), std::move(Params) });
+            
+
+            CurrentModule.Methods.emplace_back(Eegeo::InterfaceMethod{ std::move(MethodTree->getDeclName().getAsString()), std::move(RetType), std::move(Params), MethodTree->isStatic() });
         }
     }
 
@@ -199,26 +201,30 @@ namespace Eegeo {
                     pushArray();
                     {
                         for (auto m = 0; m < CurrentModule.Methods.size(); ++m) {
-                            auto& i = CurrentModule.Methods[m];
+                            auto& CurrentMethod = CurrentModule.Methods[m];
 
                             pushObject();
 
                             printField("name");
-                            printString(i.Name);
+                            printString(CurrentMethod.Name);
+                            nextField();
+
+                            printField("is-static");
+                            printString(CurrentMethod.IsStatic ? "true" : "false");
                             nextField();
 
                             printField("return-type");
-                            printType(i.ReturnType);
+                            printType(CurrentMethod.ReturnType);
                             nextField();
 
                             printField("params");
                             pushArray();
 
                             {
-                                for (auto p = 0; p < i.Params.size(); ++p) {
-                                    printType(i.Params[p]);
+                                for (auto p = 0; p < CurrentMethod.Params.size(); ++p) {
+                                    printType(CurrentMethod.Params[p]);
 
-                                    if (p != i.Params.size() - 1) {
+                                    if (p != CurrentMethod.Params.size() - 1) {
                                         nextField();
                                     }
                                 }
