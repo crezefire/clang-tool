@@ -14,8 +14,8 @@ using namespace clang::ast_matchers;
 using namespace llvm;
 
 namespace Eegeo {
-    StringRef RestrictedSimplifiedType::GetTypeName(RSType param) {
-        switch (param) {
+    StringRef RestrictedSimplifiedType::getTypeName(RSType Param) {
+        switch (Param) {
         case RSType::Void:
             return "Void";
 
@@ -49,48 +49,210 @@ namespace Eegeo {
         }
     }
 
-    std::tuple<bool, std::string, RSType> CheckBuiltinType(QualType CanonicalType, ASTContext& Context) {
-        std::string keyword;
-        RSType returnTypeName = RSType::Void;
+    void ReportError(ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
+        auto& Engine = Context.getDiagnostics();
+        const auto ErrorID = Engine.getDiagnosticIDs()->getCustomDiagID(DiagnosticIDs::Error, Message);
+        Engine.Report(SourceLoc, ErrorID);
+    }
 
-        bool typeFound = false;
+    Optional<std::pair<RSType, std::string>> resolveTypeForBuiltin(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        const auto BT = dyn_cast<BuiltinType>(CurrentType);
 
-        if (!CanonicalType->isBuiltinType()) {
-            return { typeFound, keyword, returnTypeName };
+        if (!BT) {
+            return NoneType::None;
         }
 
-        typeFound = true;
+        CurrentType.removeLocalCVRQualifiers(Qualifiers::CVRMask);
 
-        keyword = CanonicalType.getAsString();
+        auto Keyword = CurrentType.getAsString();
+        const auto Pos = Keyword.find("_Bool");
 
-        auto BT = dyn_cast<BuiltinType>(CanonicalType);
+        RSType SimpleType;
 
-        if (keyword == "_Bool") {
-            keyword = "bool";
-            returnTypeName = RSType::Boolean;
+        if (Pos != std::string::npos) {
+            Keyword.replace(Pos, 5, "bool");
+            SimpleType = RSType::Boolean;
         }
-        else if (CanonicalType->isVoidType()) {
-            returnTypeName = RSType::Void;
+        else if (CurrentType->isVoidType()) {
+            SimpleType = RSType::Void;
         }
-        else if (CanonicalType->isIntegralType(Context)) {
-            returnTypeName = RSType::Integral;
+        else if (CurrentType->isIntegralType(Context)) {
+            SimpleType = RSType::Integral;
         }
-        else if (CanonicalType->isFloatingType()) {
-            auto kind = BT->getKind();
+        else if (CurrentType->isFloatingType()) {
+            auto Kind = BT->getKind();
 
             //For future use case
-            if (kind == BuiltinType::Kind::Double || kind == BuiltinType::Kind::LongDouble)
-                returnTypeName = RSType::Floating;
+            if (Kind == BuiltinType::Kind::Double || Kind == BuiltinType::Kind::LongDouble)
+                SimpleType = RSType::Floating;
             else
-                returnTypeName = RSType::Floating;
+                SimpleType = RSType::Floating;
         }
         else {
-            //TODO(vim): Error
-            llvm::errs() << "Unsupported Builtin Type Found!!" << endl;
-            typeFound = false;
+            ReportError(Context, SourceLoc, "Unsupported builtin type found");
+            return NoneType::None;
         }
 
-        return { typeFound, keyword, returnTypeName };
+        return std::make_pair(SimpleType, std::move(Keyword));
+    }
+
+    Optional<std::pair<RSType, std::string>> resolveTypeForDecayed(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        const auto DT = dyn_cast<DecayedType>(CurrentType);
+
+        if (!DT) {
+            return NoneType::None;
+        }
+
+        RSType SimpleType;
+        std::string Keyword;
+
+        auto original = DT->getOriginalType();
+
+        if (const auto AT = dyn_cast<ArrayType>(original.getTypePtr())) {
+
+            if (AT->getSizeModifier() != ArrayType::ArraySizeModifier::Normal) {
+                ReportError(Context, SourceLoc, "Unbounded array types are unsupported");
+                return NoneType::None;
+            }
+
+            const auto CAT = dyn_cast<ConstantArrayType>(AT);
+            SimpleType = RSType::Array;
+            Keyword = original.getAsString();
+        }
+        else {
+            ReportError(Context, SourceLoc, "Unsupported decayed type");
+            return NoneType::None;
+        }
+
+        return std::make_pair(SimpleType, std::move(Keyword));
+    }
+
+    Optional<std::pair<RSType, std::string>> resolveTypeForPointer(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        auto PT = dyn_cast<PointerType>(CurrentType);
+
+        if (!PT) {
+            return NoneType::None;
+        }
+
+        RSType SimpleType = RSType::Pointer;
+        std::string Keyword;
+
+        auto Pointee = PT->getPointeeType();
+
+        if (Pointee->isBuiltinType()) {
+            Keyword = Pointee.getAsString();
+        }
+        else if (Pointee->isRecordType()) {
+            auto record = Pointee->getAsCXXRecordDecl();
+
+            /*if (!record->isPOD()) {
+                ReportError(Context, SourceLoc, "Non POD pointer type found.");
+                return NoneType::None;
+            }*/
+
+            Keyword = record->getQualifiedNameAsString();//getName();
+        }
+        else if (PT->isFunctionPointerType()) {
+            SimpleType = RSType::FunctionPointer;
+            Keyword = CurrentType.getAsString();
+        }
+        else {
+            ReportError(Context, SourceLoc, "Unsupported pointer type found");
+            return NoneType::None;
+        }
+
+        return std::make_pair(SimpleType, std::move(Keyword));
+    }
+
+    //TODO(vim): Decide how this shoudl be handled
+    //TODO(vim): How and if the quals should be discarded
+    Optional<std::pair<RSType, std::string>> resolveTypeForTypedef(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        
+        auto Ret = getSimplifiedType(CurrentType.getDesugaredType(Context), SourceLoc, Context);
+        
+        if (Ret.hasValue()) {
+            auto  ResolvedType = Ret.getValue();
+            ResolvedType.second = CurrentType.getAsString();
+
+            return ResolvedType;
+        }
+
+        return Ret;
+    }
+
+    Optional<std::pair<RSType, std::string>> resolveTypeForRecord(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        auto RT = CurrentType.getTypePtr()->getAsCXXRecordDecl();
+
+        if (!RT) {
+            return NoneType::None;
+        }
+
+        RSType SimpleType = RSType::Struct;
+        std::string Keyword;
+
+        if (RT->isPOD())
+            Keyword = RT->getQualifiedNameAsString();// getName();
+        else {
+            ReportError(Context, SourceLoc, "Unsupported Value return type found");
+            return NoneType::None;
+        }
+
+        return std::make_pair(SimpleType, std::move(Keyword));
+    }
+
+    Optional<std::pair<RSType, std::string>> resolveTypeForReference(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+        auto RT = dyn_cast<ReferenceType>(CurrentType);
+
+        if (!RT) {
+            return NoneType::None;
+        }
+
+        RSType SimpleType;
+        std::string Keyword;
+
+        auto Pointee = RT->getPointeeType();
+
+        if (Pointee->isRecordType() &&
+            Pointee->getAsCXXRecordDecl()->getDeclName().getAsString() == "basic_string") {
+            Keyword = "char";
+            SimpleType = RSType::String;
+        }
+        else {
+            ReportError(Context, SourceLoc, "Unsupported reference type. Use a pointer instead");
+            return NoneType::None;
+        }
+
+        return std::make_pair(SimpleType, Keyword);
+    }
+
+    Optional<std::pair<RSType, std::string>> getSimplifiedType(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
+
+        switch (CurrentType.getTypePtr()->getTypeClass())
+        {
+        case Type::TypeClass::Builtin:
+            return resolveTypeForBuiltin(CurrentType, SourceLoc, Context);
+
+        case Type::TypeClass::Decayed:
+            return resolveTypeForDecayed(CurrentType, SourceLoc, Context);
+
+        case Type::TypeClass::Pointer:
+            return resolveTypeForPointer(CurrentType, SourceLoc, Context);
+
+        case Type::TypeClass::Typedef:
+            return resolveTypeForTypedef(CurrentType, SourceLoc, Context);
+
+        case Type::TypeClass::Record:
+            return resolveTypeForRecord(CurrentType, SourceLoc, Context);
+
+        case Type::TypeClass::LValueReference:
+            return resolveTypeForReference(CurrentType, SourceLoc, Context);
+
+        default:
+            ReportError(Context, SourceLoc, "Unsupported type found");
+            break;
+        }
+
+        return {llvm::NoneType::None};
     }
 
     RestrictedSimplifiedType ProcessReturnType(QualType type, ASTContext& context) {
@@ -104,6 +266,8 @@ namespace Eegeo {
         std::string keyword;
 
         RSType returnTypeName = RSType::Void;
+
+        OS << type.getTypePtr()->getTypeClass() << " " << unqual->getTypeClassName() << "\n";
 
         if (unqual->isBuiltinType()) {
 
@@ -180,7 +344,7 @@ namespace Eegeo {
             OS << "Unsupported Param Type Found!!" << endl;
         }
 
-        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::GetTypeName(returnTypeName), "" };
+        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::getTypeName(returnTypeName), "" };
     }
 
     RestrictedSimplifiedType ProcessParamType(QualType type, ASTContext& context) {
@@ -195,6 +359,8 @@ namespace Eegeo {
         std::string name;
 
         RSType returnTypeName = RSType::Void;
+
+        OS << type.getTypePtr()->getTypeClass() << " " << unqual->getTypeClassName() << "\n";
 
         if (unqual->isBuiltinType()) {
 
@@ -307,6 +473,6 @@ namespace Eegeo {
             type.dump();
         }
 
-        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::GetTypeName(returnTypeName), std::move(name) };
+        return { std::move(keyword), Eegeo::RestrictedSimplifiedType::getTypeName(returnTypeName), std::move(name) };
     }
 }

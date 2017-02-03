@@ -30,10 +30,11 @@ namespace Eegeo {
     
     struct RestrictedSimplifiedType {
         std::string Keyword;
+        //std::string Qualifiers;
         StringRef TypeName;
         std::string Name;
 
-        static StringRef GetTypeName(RSType param);
+        static StringRef getTypeName(RSType param);
     };
 
     struct InterfaceMethod {
@@ -42,9 +43,11 @@ namespace Eegeo {
         std::vector<RestrictedSimplifiedType> Params;
     };
 
-    std::tuple<bool, std::string, RSType> CheckBuiltinType(clang::QualType CanonicalType, clang::ASTContext& Context);
-
     RestrictedSimplifiedType ProcessReturnType(clang::QualType type, clang::ASTContext& context);
 
     RestrictedSimplifiedType ProcessParamType(clang::QualType type, clang::ASTContext& context);
+
+    llvm::Optional<std::pair<RSType, std::string>> resolveTypeForBuiltin(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
+    
+    llvm::Optional<std::pair<RSType, std::string>> getSimplifiedType(clang::QualType CurrentType, clang::SourceLocation SourceLoc, clang::ASTContext& Context);
 }
