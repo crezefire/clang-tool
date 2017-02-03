@@ -14,8 +14,8 @@
 
 #include "EegeoTypeData.h"
 
-constexpr auto tab = "\t";
-constexpr auto endl = "\n";
+constexpr auto Tab = "\t";
+constexpr auto Endl = "\n";
 
 using namespace clang;
 using namespace llvm;
@@ -133,109 +133,138 @@ namespace Eegeo {
 
         const auto tabify = [&]() {
             for (auto i = 0; i < NumTabs; ++i) {
-                OStream << tab;
+                OStream << Tab;
             }
         };
 
         const auto oldLine = [&]() {
-            OStream << endl;
+            OStream << Endl;
             --NumTabs;
             tabify();
         };
 
         const auto newLine = [&]() {
-            OStream << endl;
+            OStream << Endl;
             ++NumTabs;
             tabify();
         };
 
         const auto nextLine = [&]() {
-            OStream << endl;
+            OStream << Endl;
             tabify();
         };
 
-        const auto enterScope = [&](auto Enter, auto Exit) {
+        const auto nextField = [&] {
+            OStream << ",";
+            nextLine();
+        };
+
+        const auto enterScope = [&](auto& OStream, auto Enter, auto Exit) {
             OStream << Enter;
             newLine();
 
             struct Pop {
+                decltype(OStream)& OS;
+                decltype(Exit) ExitScope;
+                decltype(oldLine)& PopLine;
+
+                /*bool Valid = true;
+
+                Pop(const Pop&) = delete;
+                Pop& operator=(const Pop&) = delete;
+
+                Pop(Pop&& RHS)
+                : OS(RHS.OS), ExitScope(RHS.ExitScope), PopLine(RHS.PopLine)
+                {
+                    RHS.Valid = false;
+                }
+
+                Pop& operator=(Pop&& RHS) {
+                    RHS.Valid = false;
+                }*/
+                
                 ~Pop() {
-                    oldLine();
-                    OStream << Exit;
+                    //if (!Valid) return;
+                    PopLine();
+                    OS << ExitScope;
                 }
             };
 
-            return Pop;
+            return Pop{ OStream, Exit, oldLine };
         };
 
-        OStream << "{";
-        newLine();
+        const auto pushObject = [&]() {
+            OStream << "{";
+            newLine();
+        };
+
+        const auto popObject = [&]() {
+            oldLine();
+            OStream << "}";
+        };
+
+        const auto pushArray = [&]() {
+            OStream << "[";
+            newLine();
+        };
+
+        const auto popArray = [&]() {
+            oldLine();
+            OStream << "]";
+        };
+
+        pushObject();
 
         {
             printField("modules");
-            OStream << "[";
-            newLine();
-            {
-                OStream << "{";
-                newLine();
+            pushArray();
 
+            {
+                pushObject();
                 {
                     printField("name");
                     printString(Modules[0].ClassName);
-                    OStream << ",";
-                    nextLine();
+                    nextField();
 
                     printField("file-name");
                     printString(SourceFile);
-                    OStream << ",";
-                    nextLine();
+                    nextField();
 
                     printField("namespace");
                     printString(Modules[0].Namespace);
-                    OStream << ",";
-                    nextLine();
+                    nextField();
 
                     printField("methods");
-                    OStream << "[";
-                    newLine();
-
+                    pushArray();
                     {
                         for (auto m = 0; m < Modules[0].Methods.size(); ++m) {
                             auto& i = Modules[0].Methods[m];
-                            OStream << "{";
-                            newLine();
+
+                            pushObject();
 
                             printField("name");
                             printString(i.Name);
-                            OStream << ",";
-                            nextLine();
+                            nextField();
 
                             printField("return-type");
                             printType(i.ReturnType);
-
-                            OStream << ",";
-                            nextLine();
+                            nextField();
 
                             printField("params");
-                            OStream << "[";
-                            newLine();
+                            pushArray();
 
                             {
                                 for (auto p = 0; p < i.Params.size(); ++p) {
                                     printType(i.Params[p]);
 
                                     if (p != i.Params.size() - 1) {
-                                        OStream << ",";
-                                        nextLine();
+                                        nextField();
                                     }
                                 }
                             }
 
-                            oldLine();
-                            OStream << "]";
-
-                            oldLine();
-                            OStream << "}";
+                            popArray();
+                            popObject();
 
                             if (m != Modules[0].Methods.size() - 1) {
                                 OStream << ",";
@@ -245,19 +274,15 @@ namespace Eegeo {
                         }
                     }
 
-                    oldLine();
-                    OStream << "]";
+                    popArray();
                 }
 
-                oldLine();
-                OStream << "}";
+                popObject();
             }
 
-            oldLine();
-            OStream << "]";
+            popArray();
         }
 
-        oldLine();
-        OStream << "}";
+        popObject();
     }
 }

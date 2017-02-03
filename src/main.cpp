@@ -33,7 +33,8 @@ int main(int argc, const char **argv) {
 
     auto ret = Tool.run(newFrontendActionFactory(&Finder).get());
 
-    Printer.DumpJSON();
+    if (ret == 0)
+        Printer.DumpJSON();
 
     //system("pause");
 
