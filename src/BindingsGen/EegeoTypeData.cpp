@@ -1,16 +1,9 @@
 #include "EegeoTypeData.h"
 
-// Declares clang::SyntaxOnlyAction.
-#include "clang/Frontend/FrontendActions.h"
-#include "clang/Tooling/CommonOptionsParser.h"
-#include "clang/Tooling/Tooling.h"
-
-// Declares llvm::cl::extrahelp.
-#include "llvm/Support/CommandLine.h"
+#include "clang/AST/ASTContext.h"
+#include "clang/AST/DeclCXX.h"
 
 using namespace clang;
-using namespace clang::tooling;
-using namespace clang::ast_matchers;
 using namespace llvm;
 
 namespace Eegeo {

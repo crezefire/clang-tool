@@ -16,6 +16,9 @@
 
 #include "EegeoTypeData.h"
 
+constexpr auto tab = "\t";
+constexpr auto endl = "\n";
+
 
 namespace Eegeo {
     void MatchProcessor::run(const clang::ast_matchers::MatchFinder::MatchResult &Result) {
@@ -52,7 +55,11 @@ namespace Eegeo {
 
             auto returnType = methodTree->getReturnType();
 
-            auto retType = Eegeo::ProcessReturnType(returnType, methodTree->getASTContext());
+            auto RT = Eegeo::processReturnType(returnType, methodTree->getLocation(), methodTree->getASTContext());
+
+            if (!RT.hasValue()) { return; }
+
+            auto retType = RT.getValue();
 
             //OS << methodTree->getDeclName() << " ";
 
@@ -63,8 +70,13 @@ namespace Eegeo {
             auto numParams = methodTree->getNumParams();
 
             for (auto i = 0; i < numParams; ++i) {
-                auto paramType = Eegeo::ProcessParamType(methodTree->getParamDecl(i)->getType(), methodTree->getASTContext());
-                paramType.Name = methodTree->getParamDecl(i)->getDeclName().getAsString();
+
+                auto PD = methodTree->getParamDecl(i);
+                auto Result = Eegeo::processParamType(PD->getType(), PD->getDeclName().getAsString(), PD->getLocation(), methodTree->getASTContext());
+
+                if (!Result.hasValue()) { continue; }
+
+                auto paramType = Result.getValue();
 
                 params.emplace_back(std::move(paramType));
             }
