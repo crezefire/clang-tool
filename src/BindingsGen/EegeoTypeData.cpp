@@ -35,18 +35,24 @@ namespace Eegeo {
 
         case RSTKind::String:
             return "String";
-
-        default:
-            //TODO(vim): Error
-            return "";
         }
+
+        assert(false && "Unknown SimpleType of RSTKind");
     }
 
-    void ReportError(ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
+    void ReportDiagnostic(ASTContext& Context, SourceLocation SourceLoc, StringRef Message, DiagnosticIDs::Level Level) {
         auto& Engine = Context.getDiagnostics();
-        const auto ErrorID = Engine.getDiagnosticIDs()->getCustomDiagID(DiagnosticIDs::Error, Message);
-        Engine.Report(SourceLoc, ErrorID);
+        const auto DiagID = Engine.getDiagnosticIDs()->getCustomDiagID(Level, Message);
+        Engine.Report(SourceLoc, DiagID);
     }
+
+    const auto ReportError = [&](ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
+        ReportDiagnostic(Context, SourceLoc, Message, DiagnosticIDs::Level::Error);
+    };
+
+    const auto ReportNote = [&](ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
+        ReportDiagnostic(Context, SourceLoc, Message, DiagnosticIDs::Level::Note);
+    };
 
     Optional<std::pair<RSTKind, std::string>> resolveTypeForBuiltin(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
         const auto BT = dyn_cast<BuiltinType>(CurrentType);
@@ -252,6 +258,14 @@ namespace Eegeo {
          if (!Result.hasValue()) { return NoneType::None; }
 
          auto SimpleType = Result.getValue();
+
+         if (SimpleType.first == RSTKind::Array || SimpleType.first == RSTKind::Pointer || SimpleType.first == RSTKind::String) {
+             ReportNote(Context, SourceLoc, "This is a pointer type, which has several memory ownership implications");
+         }
+
+         if (SimpleType.first == RSTKind::Struct) {
+             ReportNote(Context, SourceLoc, "Returning structs/classes may not be supported in other langauges");
+         }
 
          return RestrictedSimplifiedType{ SimpleType.second, Type.getQualifiers().getAsString(), RestrictedSimplifiedType::getTypeName(SimpleType.first), "" };
      }
