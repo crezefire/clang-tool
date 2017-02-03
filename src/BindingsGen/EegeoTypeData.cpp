@@ -50,8 +50,8 @@ namespace Eegeo {
         ReportDiagnostic(Context, SourceLoc, Message, DiagnosticIDs::Level::Error);
     };
 
-    const auto ReportNote = [&](ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
-        ReportDiagnostic(Context, SourceLoc, Message, DiagnosticIDs::Level::Note);
+    const auto ReportRemark = [&](ASTContext& Context, SourceLocation SourceLoc, StringRef Message) {
+        ReportDiagnostic(Context, SourceLoc, Message, DiagnosticIDs::Level::Remark);
     };
 
     Optional<std::pair<RSTKind, std::string>> resolveTypeForBuiltin(QualType CurrentType, SourceLocation SourceLoc, ASTContext& Context) {
@@ -260,11 +260,11 @@ namespace Eegeo {
          auto& SimpleType = Result.getValue();
 
          if (SimpleType.first == RSTKind::Array || SimpleType.first == RSTKind::Pointer || SimpleType.first == RSTKind::String) {
-             ReportNote(Context, SourceLoc, "This is a pointer type, which has several memory ownership implications");
+             ReportRemark(Context, SourceLoc, "This is a pointer type, which has several memory ownership implications");
          }
 
          if (SimpleType.first == RSTKind::Struct) {
-             ReportNote(Context, SourceLoc, "Returning structs/classes may not be supported in other langauges");
+             ReportRemark(Context, SourceLoc, "Returning structs/classes may not be supported in other langauges");
          }
 
          return RestrictedSimplifiedType{ SimpleType.second, Type.getQualifiers().getAsString(), RestrictedSimplifiedType::getTypeName(SimpleType.first), "" };
