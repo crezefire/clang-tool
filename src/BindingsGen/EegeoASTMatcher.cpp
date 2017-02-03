@@ -30,7 +30,7 @@ namespace Eegeo {
 
     void EegeoASTMatcher::run(const clang::ast_matchers::MatchFinder::MatchResult &Result) {
 
-        const auto *ClassTree = Result.Nodes.getNodeAs<clang::CXXRecordDecl>(classBindName);
+        const auto *ClassTree = Result.Nodes.getNodeAs<clang::CXXRecordDecl>(ClassBindName);
 
         const auto getFileName = [](auto* Ptr) {
             return removePath(Ptr->getASTContext().getSourceManager().getFilename(Ptr->getLocation()));
@@ -52,7 +52,7 @@ namespace Eegeo {
             Modules.push_back({ std::move(ClassName), std::move(QualifiedClassName), {} });
         }
 
-        if (const auto *MethodTree = Result.Nodes.getNodeAs<clang::CXXMethodDecl>(methodBindName)) {
+        if (const auto *MethodTree = Result.Nodes.getNodeAs<clang::CXXMethodDecl>(MethodBindName)) {
 
             if (SourceFile != getFileName(MethodTree)) { return; }
             if (clang::isa<clang::CXXConstructorDecl>(MethodTree)) { return; }
@@ -120,6 +120,7 @@ namespace Eegeo {
         llvm::outs() << "}";
     };
 
+    //TODO(vim): I know
     void EegeoASTMatcher::DumpJSON() {
         auto NumTabs = 0;
 

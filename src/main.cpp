@@ -25,8 +25,8 @@ static cl::extrahelp CommonHelp(CommonOptionsParser::HelpMessage);
 // A help message for this specific tool can be added afterwards.
 static cl::extrahelp MoreHelp("\nMore help text...");
 
-auto ClassDeclMatcher = clang::ast_matchers::cxxRecordDecl(clang::ast_matchers::isDefinition()).bind(Eegeo::classBindName);
-auto MemberFunctionMatcher = clang::ast_matchers::cxxMethodDecl().bind(Eegeo::methodBindName);
+auto ClassDeclMatcher = clang::ast_matchers::cxxRecordDecl(clang::ast_matchers::isDefinition()).bind(Eegeo::ClassBindName);
+auto MemberFunctionMatcher = clang::ast_matchers::cxxMethodDecl().bind(Eegeo::MethodBindName);
 
 int main(int argc, const char **argv) {
     CommonOptionsParser OptionsParser(argc, argv, MyToolCategory);

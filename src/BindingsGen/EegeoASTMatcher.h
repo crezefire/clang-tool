@@ -8,8 +8,8 @@
 
 namespace Eegeo {
 
-    constexpr auto classBindName = "class";
-    constexpr auto methodBindName = "method";
+    constexpr auto ClassBindName = "class";
+    constexpr auto MethodBindName = "method";
 
     struct FileModule {
         std::string ClassName;
